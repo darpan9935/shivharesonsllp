@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Shivhare Sons LLP — Industrial Automation &amp; Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0F2436;
+    --navy-2:#16334B;
+    --paper:#EEEBE3;
+    --paper-2:#E3DFD3;
+    --ink:#14202B;
+    --amber:#E08A2C;
+    --amber-dim:#C77A22;
+    --line:rgba(20,32,43,.16);
+    --line-soft:rgba(238,235,227,.18);
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  *{box-sizing:inherit;margin:0;padding:0;}
+  html{scroll-padding-top:env(safe-area-inset-top,0px);}
+  html,body{height:100%;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans',system-ui,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.mono-label{font-family:'Space Grotesk',system-ui,sans-serif;}
+  .data{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  img,svg{max-width:100%;display:block;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;}
+  @media(max-width:640px){.wrap{padding:0 18px;}}
+
+  /* ---- header ---- */
+  header{
+    position:sticky;top:0;top:env(safe-area-inset-top,0px);
+    z-index:50;background:var(--paper);
+    border-bottom:1px solid var(--line);
+  }
+  .headbar{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;max-width:1080px;margin:0 auto;gap:16px;}
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand-mark{width:34px;height:34px;flex:none;}
+  .brand-name{font-weight:600;font-size:1.02rem;letter-spacing:.01em;}
+  .brand-sub{font-size:.68rem;color:var(--amber-dim);letter-spacing:.03em;}
+  nav{display:flex;gap:2px;}
+  nav button{
+    font:inherit;font-size:.86rem;color:var(--ink);background:none;border:none;
+    padding:9px 13px;cursor:pointer;border-radius:3px;transition:background .15s, color .15s;
+    font-weight:500;
+  }
+  nav button:hover{background:var(--paper-2);}
+  nav button[aria-current="true"]{color:#fff;background:var(--navy);}
+  nav button:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--amber);outline-offset:2px;}
+  .nav-toggle{display:none;background:none;border:1px solid var(--line);border-radius:4px;padding:8px 10px;font-size:1rem;cursor:pointer;}
+  @media(max-width:760px){
+    nav{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:var(--paper);border-bottom:1px solid var(--line);padding:6px;}
+    nav.open{display:flex;}
+    .nav-toggle{display:block;}
+  }
+
+  /* ---- sections ---- */
+  section{display:none;}
+  section.active{display:block;}
+
+  /* ---- hero ---- */
+  .hero{background:var(--navy);color:var(--paper);position:relative;overflow:hidden;}
+  .hero .wrap{padding:72px 28px 60px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;}
+  @media(max-width:820px){.hero .wrap{grid-template-columns:1fr;padding:48px 20px 40px;}}
+  .eyebrow-line{display:flex;align-items:center;gap:10px;color:var(--amber);font-size:.82rem;letter-spacing:.02em;margin-bottom:18px;}
+  .eyebrow-line .rule{width:26px;height:1px;background:var(--amber);}
+  .hero h1{font-size:clamp(2rem,4.4vw,3.1rem);font-weight:700;line-height:1.08;letter-spacing:-.01em;}
+  .hero p.lede{margin-top:18px;font-size:1.08rem;color:#C9D3DB;max-width:46ch;}
+  .hero-ctas{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    display:inline-block;padding:12px 22px;border-radius:3px;font-weight:600;font-size:.92rem;
+    border:1px solid transparent;cursor:pointer;font-family:inherit;transition:transform .12s ease, background .15s;
+  }
+  .btn-amber{background:var(--amber);color:var(--ink);}
+  .btn-amber:hover{background:#EF9A3E;}
+  .btn-outline{border-color:var(--line-soft);color:var(--paper);}
+  .btn-outline:hover{background:rgba(238,235,227,.08);}
+  .btn:active{transform:translateY(1px);}
+
+  .schematic{width:100%;height:auto;}
+
+  .stat-strip{background:var(--navy-2);border-top:1px solid var(--line-soft);}
+  .stat-strip .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:0;padding:22px 28px;}
+  @media(max-width:640px){.stat-strip .wrap{grid-template-columns:repeat(2,1fr);row-gap:20px;}}
+  .stat{color:var(--paper);border-left:1px solid var(--line-soft);padding-left:18px;}
+  .stat:first-child{border-left:none;padding-left:0;}
+  @media(max-width:640px){.stat:nth-child(odd){border-left:none;padding-left:0;}}
+  .stat b{display:block;font-family:'Space Grotesk';font-size:1.5rem;color:var(--amber);}
+  .stat span{font-size:.78rem;color:#B7C2CB;}
+
+  /* ---- generic content blocks ---- */
+  .block{padding:64px 0;border-bottom:1px solid var(--line);}
+  .block:last-child{border-bottom:none;}
+  .block-head{max-width:56ch;margin-bottom:36px;}
+  .block-head .kicker{color:var(--amber-dim);font-size:.8rem;font-weight:600;letter-spacing:.02em;margin-bottom:10px;}
+  .block-head h2{font-size:clamp(1.5rem,2.6vw,2.1rem);font-weight:700;letter-spacing:-.01em;}
+  .block-head p{margin-top:12px;color:#3C4A56;font-size:1rem;}
+
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  @media(max-width:760px){.grid-3{grid-template-columns:1fr;}.grid-2{grid-template-columns:1fr;}}
+  .cell{background:var(--paper);padding:26px 24px;}
+  .cell h3{font-size:1.02rem;font-weight:600;margin-bottom:8px;display:flex;align-items:baseline;gap:9px;}
+  .cell h3 .num{color:var(--amber-dim);font-size:.78rem;}
+  .cell p{color:#3C4A56;font-size:.93rem;}
+
+  .value-row{display:flex;gap:20px;padding:18px 0;border-top:1px solid var(--line);align-items:baseline;flex-wrap:wrap;}
+  .value-row:last-child{border-bottom:1px solid var(--line);}
+  .value-row .term{font-weight:600;min-width:150px;font-family:'Space Grotesk';}
+  .value-row .desc{color:#3C4A56;font-size:.95rem;flex:1;min-width:220px;}
+
+  .sector-list{display:flex;flex-wrap:wrap;gap:10px;}
+  .sector-chip{border:1px solid var(--line);padding:8px 16px;border-radius:999px;font-size:.86rem;background:var(--paper-2);}
+
+  .process-list{counter-reset:step;}
+  .process-item{display:flex;gap:18px;padding:20px 0;border-top:1px solid var(--line);}
+  .process-item:last-child{border-bottom:1px solid var(--line);}
+  .process-item .idx{counter-increment:step;font-family:'IBM Plex Mono';color:var(--amber-dim);font-size:.82rem;padding-top:3px;}
+  .process-item .idx::before{content:"0" counter(step);}
+  .process-item h4{font-weight:600;margin-bottom:4px;}
+  .process-item p{color:#3C4A56;font-size:.93rem;max-width:60ch;}
+
+  .placeholder-note{
+    border:1px dashed var(--amber-dim);background:#F5E9D6;border-radius:6px;
+    padding:14px 18px;font-size:.86rem;color:#6B4A16;margin-top:8px;
+  }
+
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+  @media(max-width:760px){.contact-grid{grid-template-columns:1fr;}}
+  .contact-card{border:1px solid var(--line);border-radius:6px;padding:26px;background:var(--paper-2);}
+  .contact-card h3{font-size:.95rem;font-weight:600;margin-bottom:14px;}
+  .contact-line{display:flex;gap:10px;padding:8px 0;font-size:.92rem;border-top:1px solid var(--line);}
+  .contact-line:first-of-type{border-top:none;}
+  .contact-line .k{color:var(--amber-dim);min-width:70px;font-size:.8rem;font-family:'IBM Plex Mono';padding-top:2px;}
+
+  form{display:flex;flex-direction:column;gap:14px;}
+  label{font-size:.82rem;font-weight:600;display:block;margin-bottom:5px;}
+  input,textarea{
+    width:100%;font:inherit;font-size:.94rem;padding:11px 12px;border:1px solid var(--line);
+    border-radius:4px;background:var(--paper);color:var(--ink);
+  }
+  textarea{resize:vertical;min-height:96px;}
+  .form-note{font-size:.8rem;color:#5C6B76;}
+
+  footer{background:var(--navy);color:#AEBBC4;padding:36px 0;}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:.84rem;}
+  footer a:hover{color:var(--paper);}
+
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="headbar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="1" y="1" width="38" height="38" rx="4" stroke="#0F2436" stroke-width="2"/>
+        <path d="M9 27V13l11 8 11-8v14" stroke="#0F2436" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="20" cy="21" r="2.4" fill="#E08A2C"/>
+      </svg>
+      <div>
+        <div class="brand-name">Shivhare Sons LLP</div>
+        <div class="brand-sub">INDUSTRIAL AUTOMATION &amp; ENGINEERING</div>
+      </div>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    <nav id="mainNav">
+      <button data-target="home">Home</button>
+      <button data-target="about">Company</button>
+      <button data-target="products">Products &amp; Services</button>
+      <button data-target="projects">Projects</button>
+      <button data-target="contact">Contact</button>
+    </nav>
+  </div>
+</header>
+
+<!-- HOME -->
+<section id="home" class="active">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow-line"><span class="rule"></span>PLC · SCADA · CONTROL PANELS · SITC</div>
+        <h1>Automation engineering built to run your plant, not just your pilot.</h1>
+        <p class="lede">Shivhare Sons LLP designs, builds and commissions industrial automation and electrical control systems for manufacturing, process and infrastructure plants — from control philosophy to panel fabrication to site commissioning.</p>
+        <div class="hero-ctas">
+          <button class="btn btn-amber" data-target="products">See what we build</button>
+          <button class="btn btn-outline" data-target="contact">Talk to our engineers</button>
+        </div>
+      </div>
+      <svg class="schematic" viewBox="0 0 380 300" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="30" y="30" width="90" height="60" rx="3" stroke="#E08A2C" stroke-width="1.5"/>
+        <text x="45" y="65" fill="#C9D3DB" font-family="IBM Plex Mono" font-size="10">PLC</text>
+        <rect x="180" y="30" width="90" height="60" rx="3" stroke="#4C6478" stroke-width="1.5"/>
+        <text x="195" y="65" fill="#C9D3DB" font-family="IBM Plex Mono" font-size="10">SCADA</text>
+        <rect x="105" y="150" width="90" height="60" rx="3" stroke="#4C6478" stroke-width="1.5"/>
+        <text x="118" y="185" fill="#C9D3DB" font-family="IBM Plex Mono" font-size="10">MCC / PCC</text>
+        <rect x="255" y="150" width="90" height="60" rx="3" stroke="#E08A2C" stroke-width="1.5"/>
+        <text x="266" y="185" fill="#C9D3DB" font-family="IBM Plex Mono" font-size="10">FIELD I/O</text>
+        <path d="M120 60H180" stroke="#4C6478" stroke-width="1.5"/>
+        <path d="M75 90V150" stroke="#4C6478" stroke-width="1.5"/>
+        <path d="M225 90V150" stroke="#4C6478" stroke-width="1.5"/>
+        <path d="M195 180H255" stroke="#4C6478" stroke-width="1.5"/>
+        <circle cx="120" cy="60" r="3" fill="#E08A2C"/>
+        <circle cx="75" cy="150" r="3" fill="#E08A2C"/>
+        <circle cx="225" cy="150" r="3" fill="#E08A2C"/>
+        <circle cx="195" cy="180" r="3" fill="#E08A2C"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="stat-strip">
+    <div class="wrap">
+      <div class="stat"><b>Design</b><span>Control philosophy &amp; engineering</span></div>
+      <div class="stat"><b>Build</b><span>In-house panel fabrication</span></div>
+      <div class="stat"><b>Commission</b><span>Site testing &amp; SITC</span></div>
+      <div class="stat"><b>Support</b><span>AMC &amp; remote diagnostics</span></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="wrap">
+      <div class="block-head">
+        <div class="kicker">WHY SHIVHARE SONS</div>
+        <h2>One team, from single-line diagram to switched-on plant.</h2>
+        <p>Most automation jobs fail at the handover between design, panel building and site work. We keep all three under one roof so the system that gets designed is the system that gets commissioned.</p>
+      </div>
+      <div class="grid-3">
+        <div class="cell"><h3><span class="num">01</span>Single point of accountability</h3><p>One engineering team owns the project from FEED to final acceptance test — no re-explaining requirements between vendors.</p></div>
+        <div class="cell"><h3><span class="num">02</span>In-house panel shop</h3><p>Control and power panels are assembled and factory-tested on our own floor before they ever reach site.</p></div>
+        <div class="cell"><h3><span class="num">03</span>Support after go-live</h3><p>Commissioning is the start of the relationship — AMC and remote support keep systems running through their working life.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="block" style="padding-top:56px;">
+    <div class="wrap">
+      <div class="block-head">
+        <div class="kicker">COMPANY</div>
+        <h2>Engineers first, contractors second.</h2>
+        <p>Shivhare Sons LLP is an industrial automation and electrical engineering firm. We take on the parts of a project other vendors subcontract out — control system design, panel fabrication and on-site commissioning — and keep them in-house so quality and schedule stay in our control.</p>
+      </div>
+
+      <h3 style="font-size:1rem;margin-bottom:6px;">What we stand for</h3>
+      <div class="value-row"><div class="term">Engineering discipline</div><div class="desc">Every system is designed to documented standards before a single wire is pulled — cause-and-effect charts, single-line diagrams, and panel GA drawings come before fabrication.</div></div>
+      <div class="value-row"><div class="term">Plant-floor pragmatism</div><div class="desc">We design for the operator who has to run the system at 2am, not just for the commissioning checklist.</div></div>
+      <div class="value-row"><div class="term">Straight answers</div><div class="desc">If a timeline or a spec doesn't work, we say so early — not at the site acceptance test.</div></div>
+
+      <div class="placeholder-note">This section is drafted for you to edit — add your company's actual founding year, team size, registered office and any certifications you hold, so the site states only what's true and verifiable.</div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="wrap">
+      <div class="block-head">
+        <div class="kicker">SECTORS WE WORK IN</div>
+        <h2>Automation for plants that can't afford downtime.</h2>
+      </div>
+      <div class="sector-list">
+        <span class="sector-chip">Metals &amp; Mining</span>
+        <span class="sector-chip">Cement</span>
+        <span class="sector-chip">Power &amp; Infrastructure</span>
+        <span class="sector-chip">Oil &amp; Gas</span>
+        <span class="sector-chip">Pharma &amp; Process</span>
+        <span class="sector-chip">FMCG &amp; Fertilizer</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS & SERVICES -->
+<section id="products">
+  <div class="block" style="padding-top:56px;">
+    <div class="wrap">
+      <div class="block-head">
+        <div class="kicker">PRODUCTS &amp; SERVICES</div>
+        <h2>Everything between a process spec and a running control room.</h2>
+      </div>
+      <div class="grid-3">
+        <div class="cell"><h3>Control &amp; Automation Design</h3><p>PLC/SCADA/RTU architecture, control philosophy and I/O engineering built around your actual process.</p></div>
+        <div class="cell"><h3>Panel Fabrication</h3><p>PCC, MCC, IMCC and control panels built and factory-acceptance tested in-house before dispatch.</p></div>
+        <div class="cell"><h3>SITC of Automation Systems</h3><p>Supply, installation, testing and commissioning managed end to end at site.</p></div>
+        <div class="cell"><h3>Legacy System Upgrades</h3><p>Modernising ageing control systems without a full plant shutdown, migrating logic and I/O safely.</p></div>
+        <div class="cell"><h3>Application Software</h3><p>PLC and SCADA application development, HMI screens and logic tuned to operator workflow.</p></div>
+        <div class="cell"><h3>AMC &amp; Remote Support</h3><p>Scheduled maintenance contracts and remote diagnostics to keep systems running between site visits.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="wrap">
+      <div class="block-head">
+        <div class="kicker">HOW A PROJECT RUNS</div>
+        <h2>Same four stages, every project.</h2>
+      </div>
+      <div class="process-list">
+        <div class="process-item"><div class="idx"></div><div><h4>Assess</h4><p>Site survey, process review and control philosophy discussion with your operations team.</p></div></div>
+        <div class="process-item"><div class="idx"></div><div><h4>Design</h4><p>Single-line diagrams, panel GA drawings and application software specification, reviewed with you before build.</p></div></div>
+        <div class="process-item"><div class="idx"></div><div><h4>Build &amp; test</h4><p>Panels fabricated and factory-acceptance tested in-house; software staged and validated before shipping.</p></div></div>
+        <div class="process-item"><div class="idx"></div><div><h4>Commission &amp; support</h4><p>On-site installation, loop checks, commissioning, and handover into an ongoing AMC if required.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="block" style="padding-top:56px;">
+    <div class="wrap">
+      <div class="block-head">
+        <div class="kicker">PROJECTS</div>
+        <h2>The kind of work we take on.</h2>
+        <p>This page is where completed project write-ups belong — plant, scope, and outcome. Add real project summaries here as they're delivered; specifics build more credibility than any description of capability.</p>
+      </div>
+      <div class="grid-2">
+        <div class="cell"><h3>New automation build-out</h3><p>Greenfield PLC/SCADA design and panel supply for a new process line, from control philosophy through commissioning.</p></div>
+        <div class="cell"><h3>Legacy panel replacement</h3><p>Replacing obsolete control panels and migrating logic on a running plant with minimal shutdown window.</p></div>
+        <div class="cell"><h3>SCADA &amp; network upgrade</h3><p>Extending plant visibility with a new SCADA layer and IT/OT network segmentation.</p></div>
+        <div class="cell"><h3>AMC-based support</h3><p>Ongoing maintenance and remote support contract for a multi-site control system.</p></div>
+      </div>
+      <div class="placeholder-note" style="margin-top:24px;">These are illustrative project types, not real case studies. Swap them for your own completed projects — client name (with permission), scope, and result — once you have them to publish.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="block" style="padding-top:56px;">
+    <div class="wrap">
+      <div class="block-head">
+        <div class="kicker">CONTACT</div>
+        <h2>Tell us about the plant or system you're working on.</h2>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h3>Shivhare Sons LLP</h3>
+          <div class="contact-line"><span class="k">Office</span><span>699/4, Ground Floor, Behind Central Hotel, Sipri Bazar, Jhansi, Jhansi&nbsp;–&nbsp;284003, Uttar Pradesh, India</span></div>
+          <div class="contact-line"><span class="k">Email</span><span><a href="mailto:sales@shivharesonsllp.com">sales@shivharesonsllp.com</a></span></div>
+          <div class="contact-line"><span class="k">Mobile</span><span>+91 80529 28835</span></div>
+        </div>
+        <div>
+          <form id="enquiryForm">
+            <div><label for="fname">Name</label><input id="fname" type="text" placeholder="Your name" required></div>
+            <div><label for="femail">Email</label><input id="femail" type="email" placeholder="you@company.com" required></div>
+            <div><label for="fmsg">What do you need?</label><textarea id="fmsg" placeholder="Tell us about your plant, process, or system" required></textarea></div>
+            <button class="btn btn-amber" type="submit" style="align-self:flex-start;">Send enquiry</button>
+            <div class="form-note">This opens your email app with the message pre-filled to sales@shivharesonsllp.com — nothing is sent automatically until you hit send there.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Shivhare Sons LLP. All rights reserved.</span>
+    <span><a href="#" data-target="contact">Get in touch</a></span>
+  </div>
+</footer>
+
+<script>
+  const sections = document.querySelectorAll('section[id]');
+  const navButtons = document.querySelectorAll('nav button[data-target]');
+  const allTargets = document.querySelectorAll('[data-target]');
+  const nav = document.getElementById('mainNav');
+  const navToggle = document.getElementById('navToggle');
+
+  function show(id){
+    sections.forEach(s => s.classList.toggle('active', s.id === id));
+    navButtons.forEach(b => b.setAttribute('aria-current', b.dataset.target === id ? 'true' : 'false'));
+    nav.classList.remove('open');
+    navToggle.setAttribute('aria-expanded','false');
+    window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+    history.replaceState(null,'','#'+id);
+  }
+
+  allTargets.forEach(el => el.addEventListener('click', (e) => {
+    e.preventDefault();
+    show(el.dataset.target);
+  }));
+
+  navToggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  const enquiryForm = document.getElementById('enquiryForm');
+  if (enquiryForm){
+    enquiryForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('fname').value.trim();
+      const email = document.getElementById('femail').value.trim();
+      const msg = document.getElementById('fmsg').value.trim();
+      const subject = 'Enquiry from ' + (name || 'website visitor');
+      const body = 'Name: ' + name + '\nEmail: ' + email + '\n\n' + msg;
+      window.location.href = 'mailto:sales@shivharesonsllp.com?subject=' +
+        encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    });
+  }
+
+  const initial = (location.hash || '#home').slice(1);
+  show(document.getElementById(initial) ? initial : 'home');
+</script>
+
+</body>
+</html>
